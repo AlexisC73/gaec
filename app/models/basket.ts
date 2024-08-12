@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { randomUUID } from 'node:crypto'
 
 export default class Basket extends BaseModel {
   @column({ isPrimary: true })
@@ -23,4 +24,12 @@ export default class Basket extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  /**
+   * Runs before creating a new record
+   */
+  @beforeCreate()
+  static async addUUID(model: Basket) {
+    model.id = model.id || randomUUID()
+  }
 }

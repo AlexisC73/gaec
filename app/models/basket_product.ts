@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
 import Product from './product.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Basket from './basket.js'
+import { randomUUID } from 'node:crypto'
 
 export default class BasketProduct extends BaseModel {
   @column({ isPrimary: true })
@@ -23,11 +24,19 @@ export default class BasketProduct extends BaseModel {
   declare product: BelongsTo<typeof Product>
 
   @column()
-  declare quantity: string
+  declare quantity: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  /**
+   * Runs before creating a new record
+   */
+  @beforeCreate()
+  static async addUUI(model: BasketProduct) {
+    model.id = model.id || randomUUID()
+  }
 }
