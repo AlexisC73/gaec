@@ -1,5 +1,5 @@
 import User from '#models/user'
-import { createPostValidator } from '#validators/register'
+import { createPostValidator } from '#validators/auth/register'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class RegistersController {
