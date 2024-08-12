@@ -15,6 +15,7 @@ const AddProductToBasketsController = () =>
 const DeleteProductFromBasketsController = () =>
   import('#controllers/baskets/delete_product_from_baskets_controller')
 const UpdateProductQuantityController = () => import('#controllers/baskets/update_product_quantity')
+const DeleteProductController = () => import('#controllers/products/delete_products_controller')
 import router from '@adonisjs/core/services/router'
 
 router
@@ -34,6 +35,11 @@ router
       })
       .prefix('baskets')
 
-    router.post('/products', [CreateProductsController, 'handle'])
+    router
+      .group(() => {
+        router.post('/', [CreateProductsController, 'handle'])
+        router.delete('/:id', [DeleteProductController, 'handle'])
+      })
+      .prefix('products')
   })
   .prefix('api')
