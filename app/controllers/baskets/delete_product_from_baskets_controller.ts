@@ -1,5 +1,6 @@
 import Basket from '#models/basket'
 import BasketProduct from '#models/basket_product'
+import { createDeleteProductFromBasket } from '#validators/baskets/delete_product_from_basket'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class DeleteProductFromBasketsController {
@@ -7,7 +8,7 @@ export default class DeleteProductFromBasketsController {
     const authUser = await auth.authenticate()
     const { id } = request.params()
 
-    //TODO: implement validation for id
+    const validateData = await createDeleteProductFromBasket.validate({ productId: id })
 
     const basket = await Basket.query()
       .select('*')
@@ -21,7 +22,7 @@ export default class DeleteProductFromBasketsController {
 
     const basketProduct = await BasketProduct.query()
       .where('basket_id', basket.id)
-      .where('product_id', id)
+      .where('product_id', validateData.productId)
       .first()
 
     await basketProduct?.delete()
