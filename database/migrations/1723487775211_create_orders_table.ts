@@ -11,6 +11,10 @@ export default class extends BaseSchema {
       table.uuid('customer_id').references('users.id').onDelete('SET NULL')
       table.string('ip_adrress').notNullable()
       table.uuid('basket_id').references('baskets.id').onDelete('RESTRICT')
+      table
+        .enum('status', ['waiting_confirmation', 'confirmed', 'cancelled', 'delivered'])
+        .defaultTo('waiting_confirmation')
+      table.string('cancel_reason').nullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

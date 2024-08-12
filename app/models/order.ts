@@ -31,6 +31,12 @@ export default class Order extends BaseModel {
   @belongsTo(() => Basket)
   declare basket: BelongsTo<typeof Basket>
 
+  @column()
+  declare status: 'waiting_confirmation' | 'confirmed' | 'cancelled' | 'delivered'
+
+  @column()
+  declare cancelReason: string | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
