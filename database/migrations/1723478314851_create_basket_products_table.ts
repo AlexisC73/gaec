@@ -8,9 +8,11 @@ export default class extends BaseSchema {
       table.uuid('id').primary()
       table.uuid('basket_id').references('baskets.id').onDelete('CASCADE')
       table.uuid('product_id').references('products.id').onDelete('RESTRICT')
-      table.string('quantity').notNullable()
+      table.integer('quantity').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
+
+      table.unique(['basket_id', 'product_id'])
     })
   }
 
