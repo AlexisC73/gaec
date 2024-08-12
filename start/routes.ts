@@ -7,5 +7,15 @@
 |
 */
 
+const RegistersController = () => import('#controllers/auth/registers_controller')
 import router from '@adonisjs/core/services/router'
-router.on('/').renderInertia('home', { version: 6 })
+
+router
+  .group(() => {
+    router
+      .group(() => {
+        router.post('/register', [RegistersController, 'handle'])
+      })
+      .prefix('auth')
+  })
+  .prefix('api')
