@@ -16,6 +16,7 @@ export default class RegistersController {
       await User.create({
         email: validateData.email,
         password: validateData.password,
+        role: 'user',
       })
 
       return response.created()
