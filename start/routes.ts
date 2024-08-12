@@ -8,6 +8,13 @@
 */
 
 const RegistersController = () => import('#controllers/auth/registers_controller')
+const CreateProductsController = () => import('#controllers/products/create_products_controller')
+const LoginController = () => import('#controllers/auth/login_controller')
+const AddProductToBasketsController = () =>
+  import('#controllers/baskets/add_product_to_baskets_controller')
+const DeleteProductFromBasketsController = () =>
+  import('#controllers/baskets/delete_product_from_baskets_controller')
+const UpdateProductQuantityController = () => import('#controllers/baskets/update_product_quantity')
 import router from '@adonisjs/core/services/router'
 
 router
@@ -15,7 +22,18 @@ router
     router
       .group(() => {
         router.post('/register', [RegistersController, 'handle'])
+        router.post('/login', [LoginController, 'handle'])
       })
       .prefix('auth')
+
+    router
+      .group(() => {
+        router.post('/product', [AddProductToBasketsController, 'handle'])
+        router.delete('/product/:id', [DeleteProductFromBasketsController, 'handle'])
+        router.patch('/product/:id', [UpdateProductQuantityController, 'handle'])
+      })
+      .prefix('baskets')
+
+    router.post('/products', [CreateProductsController, 'handle'])
   })
   .prefix('api')
