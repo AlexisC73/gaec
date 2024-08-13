@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('name').notNullable().unique()
       table.integer('price').notNullable()
       table.boolean('published').defaultTo(false)
+      table.enum('quantity_type', ['unit', 'weight']).notNullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')
