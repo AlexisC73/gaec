@@ -38,11 +38,11 @@ export function AdminProductCard({
       <div className="flex-1">
         <p className="font-bold text-gray-8">{name}</p>
         <p className="text-gray-5">
-          {(price / 100).toFixed(2)}€/{quantityType === 'unit' ? 'each' : 'kg'}
+          {(price / 100).toFixed(2)}€/{quantityType === 'unit' ? 'pièce' : 'kg'}
         </p>
       </div>
-      <div>
-        <p>Publié</p>
+      <div className="flex gap-x-2">
+        <p>Disponible</p>
         <ToggleButton onToggleAction={handleOnToggleAction} defaultValue={published} />
       </div>
     </div>
