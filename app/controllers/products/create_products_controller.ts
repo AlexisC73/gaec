@@ -11,8 +11,8 @@ export default class CreateProductsController {
           message: 'Unauthorized',
         })
       }
-      const { name, price } = request.only(['name', 'price'])
-      const validateData = await createProductValidator.validate({ name, price })
+      const { name, price, quantityType } = request.only(['name', 'price', 'quantityType'])
+      const validateData = await createProductValidator.validate({ name, price, quantityType })
       const alreadyExist = await Product.findBy('name', validateData.name)
       if (alreadyExist) {
         return response.badRequest({
@@ -22,6 +22,7 @@ export default class CreateProductsController {
       await Product.create({
         name: validateData.name,
         price: validateData.price,
+        quantityType: 'unit',
       })
 
       return response.created()

@@ -15,6 +15,9 @@ export default class Product extends BaseModel {
   @column()
   declare published: boolean
 
+  @column({ columnName: 'quantity_type' })
+  declare quantityType: 'unit' | 'weight'
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
